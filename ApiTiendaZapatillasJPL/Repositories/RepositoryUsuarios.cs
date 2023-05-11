@@ -43,7 +43,7 @@ namespace ApiTiendaZapatillasJPL.Repositories
 
         //FUNCION PARA INSERTAR UN USUARIO
         public async Task InsertUsuario
-           (string nombre, string dni, string direccion, string telefono, string email, string password)
+           (string nombre, string dni, string direccion, string telefono, string email, byte[] password)
         {
             Usuario user = new Usuario();
             user.IdUsuario = this.GetMaxIdUsuario();

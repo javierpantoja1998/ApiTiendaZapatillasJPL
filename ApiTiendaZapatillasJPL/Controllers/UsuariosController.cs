@@ -26,12 +26,12 @@ namespace ApiTiendaZapatillasJPL.Controllers
 
         //METODO PARA INSERTAR USUARIO
         [HttpPost]
-        public async Task<ActionResult> InsertUsuario(Usuario user)
+        public async Task<ActionResult> Insert(Usuario user)
         {
-            //await this.repo.InsertUsuario(user.IdUsuario, user.Nombre,
-            //    user.Dni, user.Direccion, user.Telefono, user.Email,
-            //    user.Password);
-            //return Ok();
+            await this.repo.InsertUsuario(user.Nombre,
+                user.Dni, user.Direccion, user.Telefono, user.Email,
+                user.Password);
+            return Ok();
         }
     }
 }
