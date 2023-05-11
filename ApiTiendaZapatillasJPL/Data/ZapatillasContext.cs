@@ -8,7 +8,7 @@ namespace ApiTiendaZapatillasJPL.Data
         public ZapatillasContext(DbContextOptions<ZapatillasContext> options)
            : base(options) { }
 
-        public DbSet<Zapatilla> Personajes { get; set; }
+        public DbSet<Zapatilla> Zapatillas { get; set; }
         public DbSet<VistaZapatillasCategoria> ZapatillasCategoria { get; set; }
         public DbSet<Venta> Ventas { get; set; }
         public DbSet<Compra> Compras { get; set; }
