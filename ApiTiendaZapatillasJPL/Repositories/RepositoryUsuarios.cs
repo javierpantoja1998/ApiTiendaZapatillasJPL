@@ -1,4 +1,7 @@
 ﻿using ApiTiendaZapatillasJPL.Data;
+using ApiTiendaZapatillasJPL.Helper;
+using Microsoft.EntityFrameworkCore;
+using NuggetTiendaZapatillasJPL.Models;
 
 namespace ApiTiendaZapatillasJPL.Repositories
 {
@@ -9,6 +12,61 @@ namespace ApiTiendaZapatillasJPL.Repositories
         public RepositoryUsuarios(UsuariosContext context)
         {
             this.context = context;
+        }
+
+        //IMPLEMENTACION DE SEGURIDAD EN LA API
+
+        public async Task<Usuario> FindEmailAsync(string email)
+        {
+            return await this.context.Usuarios
+            .FirstOrDefaultAsync(x => x.Email == email);
+        }
+
+        public async Task<Usuario> FindUsuarioAsync(int idUsuario)
+        {
+            return await this.context.Usuarios
+            .FirstOrDefaultAsync(x => x.IdUsuario == idUsuario);
+        }
+
+        private int GetMaxIdUsuario()
+        {
+            if (this.context.Usuarios.Count() == 0)
+            {
+                return 1;
+            }
+            else
+            {
+                return this.context.Usuarios.Max(z => z.IdUsuario) + 1;
+            }
+        }
+
+
+        //FUNCION PARA INSERTAR UN USUARIO
+        public async Task InsertUsuario
+           (string nombre, string dni, string direccion, string telefono, string email, string password)
+        {
+            Usuario user = new Usuario();
+            user.IdUsuario = this.GetMaxIdUsuario();
+            user.Nombre = nombre;
+            user.Dni = dni;
+            user.Direccion = direccion;
+            user.Telefono = telefono;
+            user.Email = email;
+
+            this.context.Usuarios.Add(user);
+            await this.context.SaveChangesAsync();
+        }
+
+
+        //METODO PARA VER SI EXISTE EL USUARIO
+        public async Task<Usuario> ExisteUsuarioAsync
+            (string email, string password)
+        {
+            Usuario user = await this.FindEmailAsync(email);
+            return await
+                this.context.Usuarios.FirstOrDefaultAsync
+                (z => z.Email == email
+                && z.Password == HelperCriptography.EncriptPassword(password, user.Salt));
         }
     }
 }
