@@ -1,8 +1,12 @@
 ﻿using ApiTiendaZapatillasJPL.Repositories;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using NuggetTiendaZapatillasJPL.Models;
+using System.Security.Claims;
 
 namespace ApiTiendaZapatillasJPL.Controllers
 {
@@ -17,20 +21,47 @@ namespace ApiTiendaZapatillasJPL.Controllers
             this.repo = repo;
         }
 
-        [HttpGet("{id}")]
-        
-        public async Task<ActionResult<Usuario>> FindUsuario(int id)
+        [HttpPost]
+        public async Task<ActionResult> LogIn(string email, string password)
         {
-            return await this.repo.FindUsuarioAsync(id);
+            Usuario usuario = await this.repo.ExisteUsuarioAsync(email, password);
+            if (usuario != null)
+            {
+                ClaimsIdentity identity =
+               new ClaimsIdentity
+               (CookieAuthenticationDefaults.AuthenticationScheme
+               , ClaimTypes.Name, ClaimTypes.Role);
+                identity.AddClaim
+                   (new Claim(ClaimTypes.Name, usuario.Email));
+                identity.AddClaim
+                    (new Claim(ClaimTypes.NameIdentifier, usuario.Password.ToString()));
+
+                ClaimsPrincipal user = new ClaimsPrincipal(identity);
+
+                await HttpContext.SignInAsync
+                    (CookieAuthenticationDefaults.AuthenticationScheme
+                    , user);
+
+
+                return Ok();
+            }
+            else
+            {
+                
+                return Ok();
+            }
         }
 
-        //METODO PARA INSERTAR USUARIO
         [HttpPost]
-        public async Task<ActionResult> Insert(Usuario user)
+        [Route("[action]")]
+        public async Task<ActionResult> Register
+            (string nombre, string dni, string direccion, string telefono, string email, string password)
         {
-            await this.repo.InsertUsuario(user.Nombre,
-                user.Dni, user.Direccion, user.Telefono, user.Email,
-                user.Password);
+            Usuario user = new Usuario();
+            string fileName = user.IdUsuario.ToString();
+
+            await this.repo.RegistrarUsuarioAsync(nombre, dni, direccion, telefono, email, password);
+            //ViewData["MENSAJE"] = "Usuario regristado correctamente";
             return Ok();
         }
     }

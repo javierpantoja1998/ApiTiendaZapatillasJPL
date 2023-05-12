@@ -8,6 +8,7 @@ namespace ApiTiendaZapatillasJPL.Repositories
     public class RepositoryUsuarios
     {
         private UsuariosContext context;
+        private HelperCriptography helper;
 
         public RepositoryUsuarios(UsuariosContext context)
         {
@@ -42,18 +43,33 @@ namespace ApiTiendaZapatillasJPL.Repositories
 
 
         //FUNCION PARA INSERTAR UN USUARIO
-        public async Task InsertUsuario
-           (string nombre, string dni, string direccion, string telefono, string email, byte[] password)
+        public async Task RegistrarUsuarioAsync
+         (string nombre, string dni, string direccion, string telefono, string email, string password)
         {
             Usuario user = new Usuario();
-            user.IdUsuario = this.GetMaxIdUsuario();
+
+
+
+            int maximo = this.GetMaxIdUsuario();
+            user.IdUsuario = maximo;
             user.Nombre = nombre;
             user.Dni = dni;
             user.Direccion = direccion;
             user.Telefono = telefono;
             user.Email = email;
+            
+            user.Salt =
+            HelperCriptography.GenerateSalt();
+            user.Password =
+            HelperCriptography.EncriptPassword(password, user.Salt);
+            
+
+
 
             this.context.Usuarios.Add(user);
+
+
+
             await this.context.SaveChangesAsync();
         }
 

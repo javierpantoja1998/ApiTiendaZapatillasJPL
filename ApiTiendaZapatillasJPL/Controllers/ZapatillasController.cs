@@ -11,7 +11,7 @@ namespace ApiTiendaZapatillasJPL.Controllers
     {
         private RepositoryZapatillas repo;
 
-        ZapatillasController(RepositoryZapatillas repo)
+        public ZapatillasController(RepositoryZapatillas repo)
         {
             this.repo = repo;
         }

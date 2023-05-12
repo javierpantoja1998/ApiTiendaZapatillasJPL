@@ -27,22 +27,7 @@ namespace ApiTiendaZapatillasJPL.Repositories
             .FirstOrDefaultAsync(x => x.IdZapatilla == id);
         }
 
-        //Funcion para insertar
-        public async Task InsertarPersonaje
-            (string numerotarjeta, string nombre, string apellidos, string direccion,
-            string email, string numerotelefono, int codigopostal)
-        {
-            Compra compra = new Compra();
-            compra.NumeroTarjeta = numerotarjeta;
-            compra.Nombre = nombre;
-            compra.Apellidos = apellidos;
-            compra.Direccion = direccion;
-            compra.Email = email;
-            compra.NumeroTelefono = numerotelefono;
-            compra.CodigoPostal = codigopostal;
-            this.context.Compras.Add(compra);
-            await this.context.SaveChangesAsync();
-        }
+        
 
     }
 }
