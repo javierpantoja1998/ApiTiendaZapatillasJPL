@@ -1,6 +1,7 @@
 using ApiTiendaZapatillasJPL.Data;
 using ApiTiendaZapatillasJPL.Helper;
 using ApiTiendaZapatillasJPL.Repositories;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
@@ -14,6 +15,16 @@ builder.Services.AddTransient<RepositoryUsuarios>();
 builder.Services.AddSingleton<HelperOAuthToken>();
 HelperOAuthToken helper = new HelperOAuthToken(builder.Configuration);
 builder.Services.AddSingleton<HelperCriptography>();
+
+
+
+//SEGURIDAD
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie();
 
 //AÑADIMOS LAS OPCIONES DE AUTENTIFICACION
 builder.Services.AddAuthentication(helper.GetAuthenticationOptions())
