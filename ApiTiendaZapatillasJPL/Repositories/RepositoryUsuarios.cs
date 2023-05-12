@@ -47,9 +47,6 @@ namespace ApiTiendaZapatillasJPL.Repositories
          (string nombre, string dni, string direccion, string telefono, string email, string password)
         {
             Usuario user = new Usuario();
-
-
-
             int maximo = this.GetMaxIdUsuario();
             user.IdUsuario = maximo;
             user.Nombre = nombre;
@@ -62,14 +59,8 @@ namespace ApiTiendaZapatillasJPL.Repositories
             HelperCriptography.GenerateSalt();
             user.Password =
             HelperCriptography.EncriptPassword(password, user.Salt);
-            
-
-
 
             this.context.Usuarios.Add(user);
-
-
-
             await this.context.SaveChangesAsync();
         }
 

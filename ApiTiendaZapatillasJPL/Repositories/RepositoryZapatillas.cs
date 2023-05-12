@@ -27,7 +27,12 @@ namespace ApiTiendaZapatillasJPL.Repositories
             .FirstOrDefaultAsync(x => x.IdZapatilla == id);
         }
 
-        
+        //FUNCION PARA SACAR ZAPATILLAS Y CATEGORIA
+        public async Task <List<VistaZapatillasCategoria>> zapatillasCategoria(string nombreCategoria)
+        {
+            return await this.context.ZapatillasCategoria
+            .Where(x => x.NombreCategoria == nombreCategoria).ToListAsync();
+        }
 
     }
 }

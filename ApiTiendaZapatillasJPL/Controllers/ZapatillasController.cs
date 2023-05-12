@@ -28,5 +28,13 @@ namespace ApiTiendaZapatillasJPL.Controllers
         {
             return await this.repo.FindZapatillaAsync(id);
         }
+
+        [HttpGet]
+        [Route("[action]/{nombreCategoria}")]
+        public async Task <ActionResult<List<VistaZapatillasCategoria>>> ZapatillasCategoria(string nombreCategoria)
+        {
+            return await this.repo.zapatillasCategoria(nombreCategoria);
+        }
+
     }
 }
