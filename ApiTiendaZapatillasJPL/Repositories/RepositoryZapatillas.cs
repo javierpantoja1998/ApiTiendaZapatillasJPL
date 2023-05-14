@@ -1,4 +1,5 @@
 ﻿using ApiTiendaZapatillasJPL.Data;
+using ApiTiendaZapatillasJPL.Helper;
 using Microsoft.EntityFrameworkCore;
 using NuggetTiendaZapatillasJPL.Models;
 
@@ -32,6 +33,22 @@ namespace ApiTiendaZapatillasJPL.Repositories
         {
             return await this.context.ZapatillasCategoria
             .Where(x => x.NombreCategoria == nombreCategoria).ToListAsync();
+        }
+
+        //FUNCION PARA INSERTAR COMPRA
+        public async Task InsertVentasAsync
+        (string numerotarjeta, string nombre, string apellidos, string direccion, string email, 
+            string tel, int cp)
+        {
+            Compra compra = new Compra();
+            compra.NumeroTarjeta = numerotarjeta;
+            compra.Nombre = nombre;
+            compra.Apellidos = apellidos;
+            compra.Direccion = direccion;
+            compra.Email = email;
+            compra.CodigoPostal = cp;
+            this.context.Compras.Add(compra);
+            await this.context.SaveChangesAsync();
         }
 
     }

@@ -65,19 +65,19 @@ namespace ApiTiendaZapatillasJPL.Controllers
             return Ok();
         }
 
-        [Authorize]
-        [HttpGet]
-        [Route("[action]")]
-        public async Task<ActionResult<Usuario>> PerfilUsuario()
-        {
-            //DEBEMOS BUSCAR EL CLAIM DEL EMPLEADO
-            Claim claim = HttpContext.User.Claims
-                .SingleOrDefault(x => x.Type == "UserData");
-            string jsonUsuario =
-                claim.Value;
-            Usuario user = JsonConvert.DeserializeObject<Usuario>
-                (jsonUsuario);
-            return user;
-        }
+        //[Authorize]
+        //[HttpGet]
+        //[Route("[action]")]
+        //public async Task<ActionResult<Usuario>> PerfilUsuario()
+        //{
+        //    //DEBEMOS BUSCAR EL CLAIM DEL EMPLEADO
+        //    Claim claim = HttpContext.User.Claims
+        //        .SingleOrDefault(x => x.Type == "UserData");
+        //    string jsonUsuario =
+        //        claim.Value;
+        //    Usuario user = JsonConvert.DeserializeObject<Usuario>
+        //        (jsonUsuario);
+        //    return user;
+        //}
     }
 }

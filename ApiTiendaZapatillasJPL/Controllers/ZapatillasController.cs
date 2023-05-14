@@ -36,5 +36,20 @@ namespace ApiTiendaZapatillasJPL.Controllers
             return await this.repo.zapatillasCategoria(nombreCategoria);
         }
 
+
+        [HttpPost]
+        [Route("[action]")]
+        public async Task<ActionResult> Compra
+           (string numerotarjeta, string nombre, string apellidos, string direccion, string email,
+            string tel, int cp)
+        {
+            Compra user = new Compra();
+            
+
+            await this.repo.InsertVentasAsync(numerotarjeta, nombre, apellidos, direccion, email, tel,cp);
+            
+            return Ok();
+        }
+
     }
 }
