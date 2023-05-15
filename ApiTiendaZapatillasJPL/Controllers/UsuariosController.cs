@@ -53,7 +53,7 @@ namespace ApiTiendaZapatillasJPL.Controllers
         }
 
         [HttpPost]
-        [Route("[action]")]
+        [Route("[action]/{nombre}/{dni}/{direccion}/{telefono}/{email}/{password}")]
         public async Task<ActionResult> Register
             (string nombre, string dni, string direccion, string telefono, string email, string password)
         {

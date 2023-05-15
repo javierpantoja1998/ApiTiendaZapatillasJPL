@@ -38,7 +38,7 @@ namespace ApiTiendaZapatillasJPL.Controllers
 
 
         [HttpPost]
-        [Route("[action]")]
+        [Route("[action]/{numerotarjeta}/{nombre}/{apellidos}/{direccion}/{telefono}/{email}/{tel}/{cp}")]
         public async Task<ActionResult> Compra
            (string numerotarjeta, string nombre, string apellidos, string direccion, string email,
             string tel, int cp)

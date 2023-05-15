@@ -46,6 +46,7 @@ namespace ApiTiendaZapatillasJPL.Repositories
             compra.Apellidos = apellidos;
             compra.Direccion = direccion;
             compra.Email = email;
+            compra.NumeroTelefono= tel;
             compra.CodigoPostal = cp;
             this.context.Compras.Add(compra);
             await this.context.SaveChangesAsync();
